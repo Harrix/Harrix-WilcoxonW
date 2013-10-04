@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>HarrixWilcoxonW v.1.0 - Сравнение двух выборок по критерий Вилкосона</string>
+   <string>HarrixWilcoxonW v.1.1 - Сравнение двух выборок по критерий Вилкосона</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -193,6 +193,22 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="text">
            <string>Посчитать</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>4</y>
+            <width>441</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>&lt;a href=&quot;#&quot;&gt;Описание критерия : https://github.com/Harrix/Wilcoxon-W-Test&lt;/a&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
           </property>
          </widget>
         </widget>

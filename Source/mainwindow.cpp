@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDesktopServices>
 
 #include "HarrixQtLibrary.h"
 #include "HarrixMathLibrary.h"
@@ -54,11 +55,20 @@ void MainWindow::on_pushButton_clicked()
 //        ui->textEdit->insertPlainText(QString::number(Y[i])+"\n");
 //    ui->textEdit->insertPlainText("\n");
 
-    ui->textEdit->insertHtml("<b>Размер первой выборки:</b><br>");
+    double sX=TMHL_Mean(X,NX);
+    double sY=TMHL_Mean(Y,NX);
+
+    ui->textEdit->insertHtml("<b>Размер первой выборки:</b> ");
     ui->textEdit->insertHtml("n<sub>1</sub> = "+QString::number(NX)+"<br>");
 
-    ui->textEdit->insertHtml("<b>Размер второй выборки:</b><br>");
+    ui->textEdit->insertHtml("<b>Размер второй выборки:</b> ");
     ui->textEdit->insertHtml("n<sub>2</sub> = "+QString::number(NY)+"<br><br>");
+
+    ui->textEdit->insertHtml("<b>Среднее арифметическое первой выборки:</b> ");
+    ui->textEdit->insertHtml("a<sub>ср</sub> = "+QString::number(sX)+"<br>");
+
+    ui->textEdit->insertHtml("<b>Среднее арифметическое второй выборки:</b> ");
+    ui->textEdit->insertHtml("b<sub>ср</sub> = "+QString::number(sY)+"<br><br>");
 
     int VMHL_Result;
     double Q;
@@ -87,8 +97,17 @@ void MainWindow::on_pushButton_clicked()
     }
 
     ui->textEdit->insertHtml("<b>Примечание.</b><br>");
-    ui->textEdit->insertHtml("В качестве результата лучше брать ответ при Q=0.002.");
+    ui->textEdit->insertHtml("В качестве результата лучше брать ответ при Q=0.002.<br>");
+
+    //ui->textEdit->insertHtml("Описание критерия можно посмотреть тут: <a href=\"https://github.com/Harrix/Wilcoxon-W-Test\">https://github.com/Harrix/Wilcoxon-W-Test</a>.");
 
     delete[] X;
     delete[] Y;
+}
+
+void MainWindow::on_label_4_linkActivated(const QString &link)
+{
+    QUrl url;
+    url.setUrl("https://github.com/Harrix/Wilcoxon-W-Test");
+    QDesktopServices::openUrl(url);
 }
