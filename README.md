@@ -13,10 +13,21 @@ https://github.com/Harrix/HarrixWilcoxonW
 
 https://github.com/Harrix/Wilcoxon-W-Test
 
+Установка
+---------
+
+Прочитать подробно об установке и примерах использования можно тут http://blog.harrix.org/?p=1205.
+
 Скриншот программы
 ----------------
 
 ![alt text](../master/images/program.png "Скриншот программы")
+
+Использованные технологии
+-------------------------
+
+- Qt.
+- HarrixMathLibrary, HarrixQtLibrary.
 
 История проекта
 ---------------
