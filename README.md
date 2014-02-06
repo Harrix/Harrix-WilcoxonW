@@ -26,8 +26,8 @@ https://github.com/Harrix/Wilcoxon-W-Test
 Использованные технологии
 -------------------------
 
-- Qt.
-- HarrixMathLibrary, HarrixQtLibrary.
+- [Qt](http://qt-project.org/).
+- [HarrixMathLibrary](https://github.com/Harrix/HarrixMathLibrary), [HarrixQtLibrary](https://github.com/Harrix/HarrixQtLibrary).
 
 История проекта
 ---------------
