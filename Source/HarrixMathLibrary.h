@@ -22,6 +22,7 @@ const double MHL_SQRT2=1.41421356237309504880;
 const double MHL_SQRT_2=0.707106781186547524401;
 const double MHL_INFINITY=1.7E308;
 const double MHL_MINFINITY=-1.7E308;
+const double MHL_MEANINGOFLIFE=42;
 
 //ДЛЯ ГЕНЕРАТОРОВ СЛУЧАЙНЫХ ЧИСЕЛ
 enum TypeOfRandomNumberGenerator { StandardRandomNumberGenerator, MersenneTwisterRandomNumberGenerator };//тип генератора случайных чисел: стандартный или MersenneTwister:
@@ -89,6 +90,7 @@ int MHL_ProportionalSelectionV2(double *VectorOfProbability, int VMHL_N);
 int MHL_ProportionalSelectionV3(double *Fitness, int VMHL_N);
 int MHL_RankSelection(double *VectorOfProbability, int VMHL_N);
 int MHL_SelectItemOnProbability(double *P, int VMHL_N);
+void MHL_SinglepointCrossoverForReal(double *Parent1, double *Parent2, double *VMHL_ResultVector, int VMHL_N);
 int MHL_StandartBinaryGeneticAlgorithm(int *Parameters, double (*FitnessFunction)(int*,int), int *VMHL_ResultVector, double *VMHL_Result);
 int MHL_StandartGeneticAlgorithm(int *Parameters, int *NumberOfParts, double *Left, double *Right, double (*FitnessFunction)(double*,int), double *VMHL_ResultVector, double *VMHL_Result);
 int MHL_StandartGeneticAlgorithm(int *Parameters, double (*FitnessFunction)(int*,int), int *VMHL_ResultVector, double *VMHL_Result);
@@ -96,6 +98,8 @@ int MHL_StandartRealGeneticAlgorithm(int *Parameters, int *NumberOfParts, double
 int MHL_TournamentSelection(double *Fitness, int SizeTournament, int VMHL_N);
 int MHL_TournamentSelection(double *Fitness, int SizeTournament, int *Taken, int VMHL_N);
 int MHL_TournamentSelectionWithReturn(double *Fitness, int SizeTournament, int VMHL_N);
+void MHL_TwopointCrossoverForReal(double *Parent1, double *Parent2, double *VMHL_ResultVector, int VMHL_N);
+void MHL_UniformCrossoverForReal(double*Parent1, double *Parent2, double *VMHL_ResultVector, int VMHL_N);
 template <class T> void TMHL_MutationBinaryMatrix(T **VMHL_ResultMatrix, double ProbabilityOfMutation, int VMHL_N,int VMHL_M);
 template <class T> void TMHL_SinglepointCrossover(T *Parent1, T *Parent2, T *VMHL_ResultVector, int VMHL_N);
 template <class T> void TMHL_SinglepointCrossoverWithCopying(T *Parent1, T *Parent2, T *VMHL_ResultVector, int VMHL_N);
@@ -195,6 +199,7 @@ template <class T> void TMHL_GrayCodeToBinaryFromPart(T *a, T *VMHL_ResultVector
 template <class T> T TMHL_KCombinations(T k, T n);
 
 //Математические функции
+double MHL_AnswerToTheUltimateQuestionOfLifeTheUniverseAndEverything();
 double MHL_ArithmeticalProgression(double a1,double d,int n);
 double MHL_ExpMSxD2(double x);
 double MHL_GeometricSeries(double u1,double q,int n);
@@ -202,6 +207,7 @@ int MHL_GreatestCommonDivisorEuclid(int A,int B);
 int MHL_HowManyPowersOfTwo(int x);
 double MHL_InverseNormalizationNumberAll(double x);
 int MHL_LeastCommonMultipleEuclid(int A,int B);
+double MHL_MeaningOfLife();
 void MHL_MixedMultiLogicVectorOfFullSearch(int *VMHL_Vector, int I, int *HowMuchInElements, int VMHL_N);
 double MHL_NormalizationNumberAll(double x);
 int MHL_Parity(int a);
@@ -349,8 +355,12 @@ double MHL_StdDevToVariance(double StdDev);
 double MHL_VarianceToStdDev(double Variance);
 int MHL_WilcoxonW(double *a, double *b, int VMHL_N1, int VMHL_N2, double Q);
 template <class T> T TMHL_Mean(T *x, int VMHL_N);
+template <class T> T TMHL_MeanOfFilter(T *x, int VMHL_N, T UpperFilter, T LowerFilter);
+template <class T> T TMHL_MeanOfLowerFilter(T *x, int VMHL_N, T LowerFilter);
+template <class T> T TMHL_MeanOfUpperFilter(T *x, int VMHL_N, T UpperFilter);
 template <class T> T TMHL_Median(T *x, int VMHL_N);
 template <class T> T TMHL_SampleCovariance(T *x, T *y, int VMHL_N);
+template <class T> T TMHL_UncorrectedVariance(T *x, int VMHL_N);
 template <class T> T TMHL_Variance(T *x, int VMHL_N);
 
 //Тестовые функции для оптимизации
@@ -2823,6 +2833,88 @@ template <class T> T TMHL_Mean(T *x, int VMHL_N)
 return TMHL_SumVector(x,VMHL_N)/double(VMHL_N);
 }
 //---------------------------------------------------------------------------
+template <class T> T TMHL_MeanOfFilter(T *x, int VMHL_N, T UpperFilter, T LowerFilter)
+{
+/*
+Функция вычисляет среднее арифметическое массива с фильтром, то есть при подсчете не учитываются значения ниже LowerFilter и выше UpperFilter.
+Входные параметры:
+ x - массив;
+ VMHL_N - размер массива;
+ UpperFilter - верхняя граница значений, ниже которых значения не участвуют в подсчете;
+ LowerFilter - нижняя граница значений, ниже которых значения не участвуют в подсчете.
+Возвращаемое значение:
+ Среднее арифметическое массива с фильтром.
+Примечание:
+ Если будете считать для массива *int, то ответ будет некорректным, так как ответ возвратиться тоже в виде int.
+*/
+    T N=0;
+    T Sum=0;
+    for (int i=0;i<VMHL_N;i++)
+    {
+        if ((x[i]>=LowerFilter)&&(x[i]<=UpperFilter))
+        {
+            N++;
+            Sum += x[i];
+        }
+    }
+
+return Sum/N;
+}
+//---------------------------------------------------------------------------
+template <class T> T TMHL_MeanOfLowerFilter(T *x, int VMHL_N, T LowerFilter)
+{
+/*
+Функция вычисляет среднее арифметическое массива с нижним фильтром, то есть при подсчете не учитываются значения ниже LowerFilter.
+Входные параметры:
+ x - массив;
+ VMHL_N - размер массива;
+ LowerFilter - нижняя граница значений, ниже которых значения не участвуют в подсчете.
+Возвращаемое значение:
+ Среднее арифметическое массива с нижним фильтром.
+Примечание:
+ Если будете считать для массива *int, то ответ будет некорректным, так как ответ возвратиться тоже в виде int.
+*/
+    T N=0;
+    T Sum=0;
+    for (int i=0;i<VMHL_N;i++)
+    {
+        if (x[i]>=LowerFilter)
+        {
+            N++;
+            Sum += x[i];
+        }
+    }
+
+return Sum/N;
+}
+//---------------------------------------------------------------------------
+template <class T> T TMHL_MeanOfUpperFilter(T *x, int VMHL_N, T UpperFilter)
+{
+/*
+Функция вычисляет среднее арифметическое массива с верхним фильтром, то есть при подсчете не учитываются значения выше UpperFilter.
+Входные параметры:
+ x - массив;
+ VMHL_N - размер массива;
+ UpperFilter - верхняя граница значений, выше которых значения не участвуют в подсчете.
+Возвращаемое значение:
+ Среднее арифметическое массива с верхним фильтром.
+Примечание:
+ Если будете считать для массива *int, то ответ будет некорректным, так как ответ возвратиться тоже в виде int.
+*/
+    T N=0;
+    T Sum=0;
+    for (int i=0;i<VMHL_N;i++)
+    {
+        if (x[i]<=UpperFilter)
+        {
+            N++;
+            Sum += x[i];
+        }
+    }
+
+return Sum/N;
+}
+//---------------------------------------------------------------------------
 template <class T> T TMHL_Median(T *x, int VMHL_N)
 {
 /*
@@ -2872,6 +2964,29 @@ for(int i=0;i<VMHL_N;i++)
  VMHL_Result+=(x[i]-xn)*(y[i]-yn);
 
 VMHL_Result/=VMHL_N-1;
+return VMHL_Result;
+}
+//---------------------------------------------------------------------------
+template <class T> T TMHL_UncorrectedVariance(T *x, int VMHL_N)
+{
+/*
+Функция вычисляет неисправленная выборочную дисперсию выборки.
+Входные параметры:
+ x - указатель на исходную выборку;
+ VMHL_N - размер массива.
+Возвращаемое значение:
+ Выборочная неисправленная дисперсия выборки.
+*/
+T xn;
+T VMHL_Result=0;
+
+//Найдем среднее арифметические выборки
+xn=TMHL_Mean(x,VMHL_N);
+
+for(int i=0;i<VMHL_N;i++)
+ VMHL_Result+=(x[i]-xn)*(x[i]-xn);
+
+VMHL_Result/=VMHL_N;
 return VMHL_Result;
 }
 //---------------------------------------------------------------------------
