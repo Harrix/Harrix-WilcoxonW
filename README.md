@@ -27,7 +27,7 @@ https://github.com/Harrix/Wilcoxon-W-Test
 -------------------------
 
 - [Qt](http://qt-project.org/).
-- [HarrixMathLibrary](https://github.com/Harrix/HarrixMathLibrary), [HarrixQtLibrary](https://github.com/Harrix/HarrixQtLibrary).
+- [HarrixMathLibrary](https://github.com/Harrix/HarrixMathLibrary), [HarrixQtLibrary](https://github.com/Harrix/HarrixQtLibrary), [mtrand](http://www.bedaux.net/mtrand/).
 
 История проекта
 ---------------
