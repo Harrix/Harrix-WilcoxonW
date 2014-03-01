@@ -5,23 +5,23 @@ HarrixWilcoxonW
 
 Программа для быстрой проверки критерия Вилкосона для двух выборок.
 
-https://github.com/Harrix/HarrixWilcoxonW
+[https://github.com/Harrix/HarrixWilcoxonW](https://github.com/Harrix/HarrixWilcoxonW)
 
-Программа распространяется по лицензии [Apache License, Version 2.0](../master/LICENSE.txt).
+Программа распространяется по лицензии [Apache License, Version 2.0](https://github.com/Harrix/HarrixWilcoxonW/blob/master/LICENSE.txt).
 
 О критерии Вилкосона можно почитать тут:
 
-https://github.com/Harrix/Wilcoxon-W-Test
+[https://github.com/Harrix/Wilcoxon-W-Test](https://github.com/Harrix/Wilcoxon-W-Test)
 
 Установка
 ---------
 
-Прочитать подробно об установке и примерах использования можно тут http://blog.harrix.org/?p=1205.
+Прочитать подробно об установке и примерах использования можно тут [http://blog.harrix.org/?p=1205](http://blog.harrix.org/?p=1205).
 
 Скриншот программы
 ----------------
 
-![alt text](../master/images/program.png "Скриншот программы")
+![alt text](https://raw.github.com/Harrix/HarrixWilcoxonW/master/images/program.png "Скриншот программы")
 
 Использованные технологии
 -------------------------
@@ -32,7 +32,7 @@ https://github.com/Harrix/Wilcoxon-W-Test
 История проекта
 ---------------
 
-Подробный список изменений в файле [CHANGELOG.md](../master/CHANGELOG.md).
+Подробный список изменений в файле [CHANGELOG.md](https://github.com/Harrix/HarrixWilcoxonW/blob/master/CHANGELOG.md).
 
 Контакты
 --------
