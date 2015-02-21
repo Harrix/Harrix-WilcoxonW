@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>HarrixWilcoxonW v.1.1 - Сравнение двух выборок по критерий Вилкосона</string>
+   <string>HarrixWilcoxonW v.1.2 - Сравнение двух выборок по критерий Вилкосона</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -136,6 +136,13 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item>
+     <widget class="QCheckBox" name="checkBox">
+      <property name="text">
+       <string>Подробный отчет</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QFrame" name="frame">
       <property name="minimumSize">
        <size>
@@ -193,6 +200,9 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="text">
            <string>Посчитать</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QLabel" name="label_4">

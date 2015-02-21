@@ -35,10 +35,6 @@ void MainWindow::on_pushButton_clicked()
 
     THQt_ReadVectorFromQStringList(QStringListX, X);
 
-//    for (i=0;i<NX;i++)
-//        ui->textEdit->insertPlainText(QString::number(X[i])+"\n");
-//    ui->textEdit->insertPlainText("\n");
-
     //Вторая выборка
     QString SY;
     SY = ui->textEdit_3->toPlainText();
@@ -51,29 +47,34 @@ void MainWindow::on_pushButton_clicked()
 
     THQt_ReadVectorFromQStringList(QStringListY, Y);
 
-//    for (i=0;i<NY;i++)
-//        ui->textEdit->insertPlainText(QString::number(Y[i])+"\n");
-//    ui->textEdit->insertPlainText("\n");
+    //Начало анализа
 
-    double sX=TMHL_Mean(X,NX);
-    double sY=TMHL_Mean(Y,NX);
+    int FullAnalyse = ui->checkBox->checkState();//проводитm ли полный анализ
 
-    ui->textEdit->insertHtml("<b>Размер первой выборки:</b> ");
-    ui->textEdit->insertHtml("n<sub>1</sub> = "+QString::number(NX)+"<br>");
+    double sX=HML_Mean(X,NX);
+    double sY=HML_Mean(Y,NY);
 
-    ui->textEdit->insertHtml("<b>Размер второй выборки:</b> ");
-    ui->textEdit->insertHtml("n<sub>2</sub> = "+QString::number(NY)+"<br><br>");
+    if (FullAnalyse>0)
+    {
+        ui->textEdit->insertHtml("<b>Размер первой выборки:</b> ");
+        ui->textEdit->insertHtml("n<sub>1</sub> = "+QString::number(NX)+"<br>");
 
-    ui->textEdit->insertHtml("<b>Среднее арифметическое первой выборки:</b> ");
-    ui->textEdit->insertHtml("a<sub>ср</sub> = "+QString::number(sX)+"<br>");
+        ui->textEdit->insertHtml("<b>Размер второй выборки:</b> ");
+        ui->textEdit->insertHtml("n<sub>2</sub> = "+QString::number(NY)+"<br><br>");
 
-    ui->textEdit->insertHtml("<b>Среднее арифметическое второй выборки:</b> ");
-    ui->textEdit->insertHtml("b<sub>ср</sub> = "+QString::number(sY)+"<br><br>");
+        ui->textEdit->insertHtml("<b>Среднее арифметическое первой выборки:</b> ");
+        ui->textEdit->insertHtml("a<sub>ср</sub> = "+QString::number(sX)+"<br>");
+
+        ui->textEdit->insertHtml("<b>Среднее арифметическое второй выборки:</b> ");
+        ui->textEdit->insertHtml("b<sub>ср</sub> = "+QString::number(sY)+"<br><br>");
+    }
 
     int VMHL_Result;
     double Q;
 
     QString Space="";
+
+    double Lr, Rr, Wr;
 
     for (i=0;i<6;i++)
     {
@@ -84,22 +85,22 @@ void MainWindow::on_pushButton_clicked()
         if (i==4) {Q=0.1;Space="0.100";}
         if (i==5) {Q=0.2;Space="0.200";}
 
-        VMHL_Result=MHL_WilcoxonW(X,Y,NX,NY,Q);
+        VMHL_Result=HML_WilcoxonW(X,Y,NX,NY,Q, &Lr, &Rr, &Wr);
 
         ui->textEdit->insertHtml("При уровне значимости Q = "+Space+": ");
 
         if (VMHL_Result==-1)
-            ui->textEdit->insertHtml("<b>Объемы выборок не позволяют провести проверку при данном уровне значимости.</b><br><br>");
+            ui->textEdit->insertHtml("<b>Объемы выборок не позволяют провести проверку при данном уровне значимости.</b><br>");
         if (VMHL_Result==0)
-            ui->textEdit->insertHtml("<b>Выборки <font color=\"red\">неоднородны</font>  при данном уровне значимости.</b><br><br>");
+            ui->textEdit->insertHtml("<b>Выборки <font color=\"red\">неоднородны</font>  при данном уровне значимости.</b><br>");
         if (VMHL_Result==1)
-            ui->textEdit->insertHtml("<b>Выборки <font color=\"green\">однородны</font>  при данном уровне значимости.</b><br><br>");
+            ui->textEdit->insertHtml("<b>Выборки <font color=\"green\">однородны</font>  при данном уровне значимости.</b><br>");
+
+        if (FullAnalyse>0)
+        {
+            ui->textEdit->insertHtml("Значение статистики W = "+QString::number(Wr)+", а границы интервала критических значений статистики ["+QString::number(Lr)+"; "+QString::number(Rr)+"].<br><br>");
+        }
     }
-
-    ui->textEdit->insertHtml("<b>Примечание.</b><br>");
-    ui->textEdit->insertHtml("В качестве результата лучше брать ответ при Q=0.002.<br>");
-
-    //ui->textEdit->insertHtml("Описание критерия можно посмотреть тут: <a href=\"https://github.com/Harrix/Wilcoxon-W-Test\">https://github.com/Harrix/Wilcoxon-W-Test</a>.");
 
     delete[] X;
     delete[] Y;
