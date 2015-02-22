@@ -69,7 +69,7 @@ void MainWindow::on_pushButton_clicked()
         ui->textEdit->insertHtml("b<sub>ср</sub> = "+QString::number(sY)+"<br><br>");
     }
 
-    int VMHL_Result;
+    int Result;
     double Q;
 
     QString Space="";
@@ -85,15 +85,15 @@ void MainWindow::on_pushButton_clicked()
         if (i==4) {Q=0.1;Space="0.100";}
         if (i==5) {Q=0.2;Space="0.200";}
 
-        VMHL_Result=HML_WilcoxonW(X,Y,NX,NY,Q, &Lr, &Rr, &Wr);
+        Result=HML_WilcoxonW(X,Y,NX,NY,Q, &Lr, &Rr, &Wr);
 
         ui->textEdit->insertHtml("При уровне значимости Q = "+Space+": ");
 
-        if (VMHL_Result==-1)
+        if (Result==-1)
             ui->textEdit->insertHtml("<b>Объемы выборок не позволяют провести проверку при данном уровне значимости.</b><br>");
-        if (VMHL_Result==0)
+        if (Result==0)
             ui->textEdit->insertHtml("<b>Выборки <font color=\"red\">неоднородны</font>  при данном уровне значимости.</b><br>");
-        if (VMHL_Result==1)
+        if (Result==1)
             ui->textEdit->insertHtml("<b>Выборки <font color=\"green\">однородны</font>  при данном уровне значимости.</b><br>");
 
         if (FullAnalyse>0)
