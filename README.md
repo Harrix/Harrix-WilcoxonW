@@ -7,7 +7,7 @@ HarrixWilcoxonW
 
 [https://github.com/Harrix/HarrixWilcoxonW](https://github.com/Harrix/HarrixWilcoxonW)
 
-Программа распространяется по лицензии [Apache License, Version 2.0](https://github.com/Harrix/HarrixWilcoxonW/blob/master/LICENSE.txt).
+Программа распространяется по лицензии [MIT](https://github.com/Harrix/HarrixWilcoxonW/blob/master/LICENSE).
 
 О критерии Вилкосона можно почитать тут:
 
